@@ -1,7 +1,8 @@
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import { Manrope } from "next/font/google";
-import Link from "next/link";
+import { Footer } from "~/components/footer";
+import { Header } from "~/components/header";
 import { cn } from "~/lib/utils";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-sans" });
@@ -25,24 +26,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn(manrope.className, "mx-auto max-w-screen-md px-6")}>
-        <header>
-          <div className="container mx-auto flex items-center justify-between py-6">
-            <Link href="/" className="text-2xl font-semibold no-underline">
-              Next.js for Drupal
-            </Link>
-            <Link
-              href="https://next-drupal.org/docs"
-              target="_blank"
-              rel="external"
-              className="hover:text-blue-600"
-            >
-              Read the docs
-            </Link>
-          </div>
-        </header>
-
-        <main className="container mx-auto py-10">{children}</main>
+      <body className={cn(manrope.className, "text-base")}>
+        <Header />
+        {children}
+        <Footer />
       </body>
     </html>
   );

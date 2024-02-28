@@ -9,7 +9,7 @@ interface NodeArticleTeaserProps {
 }
 
 export function NodeArticleTeaser({ node, ...props }: NodeArticleTeaserProps) {
-  console.log(node);
+  // console.log(node);
 
   return (
     <article {...props}>

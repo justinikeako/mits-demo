@@ -22,49 +22,49 @@ export default {
         sans: ["var(--font-sans)", ...fontFamily.sans],
       },
       fontSize: {
-        xs: ["0.75rem", { lineHeight: "1rem", fontWeight: 300 }],
-        sm: ["0.875rem", { lineHeight: "1.25rem", fontWeight: 300 }],
-        base: ["1rem", { lineHeight: "1.5rem", fontWeight: 300 }],
-        lg: ["1.125rem", { lineHeight: "1.75rem", fontWeight: 300 }],
+        xs: ["0.75rem", { lineHeight: "1rem" }],
+        sm: ["0.875rem", { lineHeight: "1.25rem" }],
+        base: ["1rem", { lineHeight: "1.5rem" }],
+        lg: ["1.125rem", { lineHeight: "1.75rem" }],
         xl: [
           "1.25rem",
           {
             lineHeight: "1.75rem",
-            fontWeight: 400,
+            fontWeight: 600,
             letterSpacing: "-0.0125em",
           },
         ],
         "2xl": [
           "1.5rem",
-          { lineHeight: "2rem", fontWeight: 400, letterSpacing: "-0.025em" },
+          { lineHeight: "2rem", fontWeight: 600, letterSpacing: "-0.025em" },
         ],
         "3xl": [
           "1.875rem",
-          { lineHeight: "2.25rem", fontWeight: 400, letterSpacing: "-0.025em" },
+          { lineHeight: "2.25rem", fontWeight: 600, letterSpacing: "-0.025em" },
         ],
         "4xl": [
           "2.25rem",
-          { lineHeight: "2.5rem", fontWeight: 400, letterSpacing: "-0.05em" },
+          { lineHeight: "2.5rem", fontWeight: 600, letterSpacing: "-0.025em" },
         ],
         "5xl": [
           "3rem",
-          { lineHeight: "1", fontWeight: 400, letterSpacing: "-0.05em" },
+          { lineHeight: "1", fontWeight: 600, letterSpacing: "-0.025em" },
         ],
         "6xl": [
           "3.75rem",
-          { lineHeight: "1", fontWeight: 400, letterSpacing: "-0.05em" },
+          { lineHeight: "1", fontWeight: 600, letterSpacing: "-0.025em" },
         ],
         "7xl": [
           "4.5rem",
-          { lineHeight: "1", fontWeight: 400, letterSpacing: "-0.05em" },
+          { lineHeight: "1", fontWeight: 600, letterSpacing: "-0.025em" },
         ],
         "8xl": [
           "6rem",
-          { lineHeight: "1", fontWeight: 400, letterSpacing: "-0.05em" },
+          { lineHeight: "1", fontWeight: 400, letterSpacing: "-0.025em" },
         ],
         "9xl": [
           "8rem",
-          { lineHeight: "1", fontWeight: 400, letterSpacing: "-0.05em" },
+          { lineHeight: "1", fontWeight: 400, letterSpacing: "-0.025em" },
         ],
       },
       lineHeight: {
