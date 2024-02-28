@@ -9,14 +9,14 @@ const buttonVariants = cva(
     variants: {
       intent: {
         primary:
-          "flex h-10 items-center gap-2 rounded-lg border-b border-t border-b-transparent font-bold shadow outline-offset-4 ring-1 active:shadow-inner",
+          "flex h-10 items-center gap-2 rounded-lg border-b border-t border-b-transparent font-bold shadow outline-offset-4 ring-1 before:absolute before:block before:size-full before:rounded-lg before:opacity-0 active:shadow-sm active:before:opacity-100",
         tertiary:
           "rounded-lg bg-transparent hover:bg-black/5 active:bg-black/15",
       },
       color: {
         amber:
-          "border-t-amber-500 bg-amber-600 text-amber-50 shadow-amber-950 ring-amber-700 focus-visible:outline-amber-600 active:border-b-amber-600 active:border-t-transparent active:bg-amber-700",
-        blue: "border-t-blue-600 bg-blue-700 text-blue-50 shadow-blue-950 ring-blue-800 focus-visible:outline-blue-700 active:border-b-blue-700 active:border-t-transparent active:bg-blue-800",
+          "border-t-amber-500 bg-amber-600 text-amber-50 shadow-amber-950 ring-amber-700 before:bg-amber-950/5 focus-visible:outline-amber-600 active:border-b-amber-500 active:border-t-transparent",
+        blue: "border-t-blue-600 bg-blue-700 text-blue-50 shadow-blue-950 ring-blue-800 before:bg-blue-950/5 focus-visible:outline-blue-700 active:border-b-blue-600 active:border-t-transparent",
       },
       size: {
         lg: "text-lg",
