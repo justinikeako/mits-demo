@@ -28,7 +28,7 @@ export async function generateStaticParams() {
   return await drupal.getPathsFromContext(RESOURCE_TYPES, {});
 }
 
-export async function getResource(slug: string) {
+async function getResource(slug: string) {
   const path = await drupal.translatePath(slug);
 
   const type = path.jsonapi?.resourceName;
