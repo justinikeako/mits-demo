@@ -66,7 +66,7 @@ export default async function Page() {
       <PageSection className="space-y-16">
         <SectionHeading>About M.I.T.S.</SectionHeading>
 
-        <div className="grid grid-cols-1 grid-rows-2 gap-12 lg:grid-cols-3">
+        <div className="grid-auto-rows grid grid-cols-1 gap-12 lg:grid-cols-3">
           <div className="flex flex-col justify-between gap-12 lg:col-span-2 lg:row-span-2">
             <h3 className="text-pretty text-2xl !leading-[1.1] md:text-3xl lg:text-4xl xl:text-5xl">
               Driving Technological Advancement Across Campus: Enhancing
@@ -87,7 +87,7 @@ export default async function Page() {
               community for local and international outreach.
             </p>
           </div>
-          <div className="relative row-start-1 lg:col-span-1 lg:row-span-2">
+          <div className="relative row-start-1 aspect-[3/2] lg:col-span-1 lg:row-span-2 lg:aspect-auto">
             <Image
               src={mitsSign}
               fill
