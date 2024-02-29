@@ -10,7 +10,7 @@ export const env = createEnv({
     NEXT_IMAGE_DOMAIN: z
       .string()
       .refine(
-        (str) => !str.includes("YOUR_IMAGE_DOMAIN"),
+        (str) => !str.includes("dev.next-drupal.org"),
         "You forgot to change the default image domain. This is necessary for next/image to work properly.",
       ),
     NODE_ENV: z
@@ -28,7 +28,7 @@ export const env = createEnv({
       .string()
       .url()
       .refine(
-        (str) => !str.includes("YOUR_DRUPAL_BASE_URL"),
+        (str) => !str.includes("https://dev.next-drupal.org"),
         "You forgot to change the default Drupal URL",
       ),
   },
