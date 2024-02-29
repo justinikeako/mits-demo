@@ -1,9 +1,12 @@
 import Image from "next/image";
-import Link from "next/link";
 import { Button } from "~/components/button";
 import { Icon } from "~/components/icon";
 import { PageSection, SectionHeading } from "~/components/page-section";
+import { NewsSection } from "~/components/sections/news";
 import { ServicesSection } from "~/components/sections/services";
+import mitsSign from "../../public/mits-sign.jpg";
+import Link from "next/link";
+import { Suspense } from "react";
 
 export default async function Page() {
   return (
@@ -52,45 +55,9 @@ export default async function Page() {
       </PageSection>
 
       {/* News Section */}
-      <PageSection className="space-y-16">
-        <div className="flex items-center justify-between">
-          <SectionHeading>Featured News & Events</SectionHeading>
-          <Link
-            href="/news"
-            className="text-sm font-bold text-blue-600 md:text-base"
-          >
-            See All
-          </Link>
-        </div>
-
-        <ul className="grid auto-rows-auto grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          <li className="space-y-3 sm:col-span-2 lg:row-span-2">
-            <div className="bg-3 aspect-video bg-gray-300"></div>
-            <p className="text-amber-600">Staff Software</p>
-            <h3 className="text-balance text-3xl">Introducing eTimesheets</h3>
-            <p className="max-w-prose text-pretty">
-              M.I.T.S. rolls out a new electronic timesheet (eTimesheet) system
-              for managerial staff. This system allows employees to easily
-              record their own eTimesheets which their managers/supervisors may
-              approve them...
-            </p>
-          </li>
-          <li className="col-span-1 row-span-1 space-y-1">
-            <div className="bg-3 aspect-video bg-gray-300"></div>
-            <p className="text-amber-600">Miscellaneous</p>
-            <h3 className="text-balance text-2xl">
-              MITS — An Enabler of Positive Transformation
-            </h3>
-          </li>
-          <li className="col-span-1 row-span-1 space-y-1">
-            <div className="bg-3 aspect-video bg-gray-300"></div>
-            <p className="text-amber-600">Miscellaneous</p>
-            <h3 className="text-balance text-2xl">
-              Second Edition M.I.T.S. Newsletter
-            </h3>
-          </li>
-        </ul>
-      </PageSection>
+      <Suspense>
+        <NewsSection />
+      </Suspense>
 
       {/* Services Section */}
       <ServicesSection />
@@ -120,10 +87,21 @@ export default async function Page() {
               community for local and international outreach.
             </p>
           </div>
-          <div className="row-start-1 bg-gray-300 lg:col-span-1 lg:row-span-2"></div>
+          <div className="relative row-start-1 lg:col-span-1 lg:row-span-2">
+            <Image
+              src={mitsSign}
+              fill
+              className="object-contain"
+              alt="M.I.T.S Building Sign"
+            />
+          </div>
         </div>
 
-        <Button>Meet M.I.T.S. Leadership</Button>
+        <Button asChild>
+          <Link href="https://www.mona.uwi.edu/mits/news/2018/09/mits-enabler-positive-transformation">
+            Meet M.I.T.S. Leadership
+          </Link>
+        </Button>
       </PageSection>
 
       {/* FAQ Section */}

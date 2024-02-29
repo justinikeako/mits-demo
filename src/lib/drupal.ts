@@ -7,7 +7,7 @@ export const drupal = new DrupalClient(env.NEXT_PUBLIC_DRUPAL_BASE_URL, {
     init?: RequestInit,
   ): Promise<Response> => {
     return fetch(input, {
-      cache: "force-cache",
+      cache: "default",
       // next: { revalidate: 60 * 60 * 24 },
       ...init,
     });

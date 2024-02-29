@@ -4,7 +4,7 @@ import { type VariantProps, cva } from "class-variance-authority";
 import { cn } from "~/lib/utils";
 
 const buttonVariants = cva(
-  "group relative flex select-none items-center justify-center gap-1 text-center disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none",
+  "group relative flex w-fit select-none items-center justify-center gap-1 text-center disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none",
   {
     variants: {
       intent: {
