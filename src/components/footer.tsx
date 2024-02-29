@@ -5,15 +5,15 @@ export function Footer() {
   return (
     <footer className="bg-gray-100">
       <div className="space-y-16  px-6 pb-8 pt-12  2xl:container sm:px-8 md:px-12 lg:px-16">
-        <nav className="flex flex-col justify-between gap-8 md:gap-24 lg:flex-row">
+        <nav className="flex flex-col flex-wrap gap-16 xs:flex-row xl:gap-12">
           <Image
             width="138"
             height="80"
             src="/mits-logo-ext.svg"
             alt="Mona Information Technology Services"
           />
-
-          <dl className="flex flex-col flex-wrap gap-12 lg:flex-row">
+          <div className="h-20 flex-1 max-sm:hidden" />
+          <dl className="contents">
             <div className="w-64 space-y-4">
               <dt className="font-bold">Hotspot Locations</dt>
               <div className="aspect-video bg-gray-300" />
@@ -63,21 +63,21 @@ export function Footer() {
           </dl>
         </nav>
 
-        <div className="flex justify-between text-xs">
+        <div className="flex flex-col gap-4 text-xs md:flex-row md:justify-between">
           <p>
             Mona Information Technology Services
             <br />
             The University of the West Indies
           </p>
 
-          <div className="flex gap-1">
+          <div className="flex gap-2">
             <Link href="/disclamer">Disclamer</Link>
 
             <div className="block h-4 w-px bg-current" />
             <Link href="/privacy-statement">Privacy Statement</Link>
           </div>
 
-          <p className="text-right">
+          <p className="md:text-right">
             &copy; 2004 - 2024
             <br />
             <Link href="http://www.mona.uwi.edu">http://www.mona.uwi.edu</Link>.
