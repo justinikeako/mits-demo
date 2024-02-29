@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "~/components/button";
+import { Icon } from "~/components/icon";
+import { PageSection, SectionHeading } from "~/components/page-section";
 
 export default async function Page() {
   return (
@@ -8,40 +10,63 @@ export default async function Page() {
       <div className="absolute top-0 -z-10 h-screen w-full">
         <Image src="decorative-background.svg" alt="" fill aria-hidden />
       </div>
-      <section className="flex flex-col items-center px-16 py-24 2xl:container">
-        <p>Mona Information Technology Services</p>
-        <h1 className="text-7xl">How can we help you today?</h1>
 
-        <div className="border-1 mt-10 flex rounded-xl border border-gray-400 py-1 pl-4 pr-1 text-lg shadow-sm outline-2 -outline-offset-1 outline-blue-600 has-[input:focus]:outline">
+      {/* Hero */}
+      <PageSection className="flex flex-col items-center py-24">
+        <p className="text-center text-sm sm:text-base">
+          Mona Information Technology Services
+        </p>
+        <h1 className="text-pretty text-center text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
+          How can we help you today?
+        </h1>
+
+        <div className="border-1 mt-10 flex w-full rounded-xl border border-gray-400 py-1 pl-4 pr-1 text-sm shadow-sm outline-2 -outline-offset-1 outline-blue-600 has-[input:focus]:outline sm:w-fit sm:text-base md:text-lg">
           <input
             type="text"
             name=""
             id=""
             placeholder="E.g. I need a projector for my next class"
-            className="w-96 placeholder-gray-500 outline-none"
+            className="flex-1 placeholder-gray-500 outline-none sm:w-96"
           />
-          <Button size="lg">Get your Answer</Button>
+          <Button className="md:hidden" iconOnly>
+            <Icon name="arrow_right" />
+          </Button>
+          <Button size="lg" className="max-md:hidden">
+            <span>Get your Answer</span>
+            <Icon name="arrow_right" />
+          </Button>
         </div>
-        <div className="mt-4 flex h-8 items-center gap-2 rounded-lg border border-amber-100 bg-amber-50 px-2 text-amber-950 ">
-          <span className="size-2 rounded-full bg-amber-600 before:block before:size-full before:animate-ping before:rounded-full before:bg-amber-600 before:opacity-75" />
-          <span>Scheduled SoSci Networking Maintenance</span>
-          <div className="block h-6 w-px bg-amber-200" />
-          <span className="font-bold">Learn More</span>
-        </div>
-      </section>
 
-      <section className="bg space-y-16 bg-gray-100 px-16 py-16 2xl:container">
+        <div className="mt-4 flex gap-4 rounded-lg border border-amber-100 bg-amber-50 px-3 py-2 text-sm text-amber-950 md:py-1">
+          <div className="-mr-2 flex h-5 items-center self-start">
+            <div className="size-2 rounded-full bg-amber-600 before:block before:size-full before:animate-ping before:rounded-full before:bg-amber-600 before:opacity-75" />
+          </div>
+
+          <span className="text-balance">
+            Scheduled SoSci Networking Maintenance
+          </span>
+          <div className="block w-px bg-amber-200" />
+          <button className="text-nowrap font-bold">Learn More</button>
+        </div>
+      </PageSection>
+
+      {/* News Section */}
+      <PageSection className="space-y-16">
         <div className="flex items-center justify-between">
-          <h2 className="text-3xl">Featured News & Events</h2>
-          <Link href="/news" className="font-bold text-blue-600">
-            See All News
+          <SectionHeading>Featured News & Events</SectionHeading>
+          <Link
+            href="/news"
+            className="text-sm font-bold text-blue-600 md:text-base"
+          >
+            See All
           </Link>
         </div>
-        <ul className="grid grid-cols-3 grid-rows-2 gap-8">
-          <li className="col-span-2 row-span-2 space-y-3">
+
+        <ul className="grid auto-rows-auto grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <li className="space-y-3 sm:col-span-2 lg:row-span-2">
             <div className="bg-3 aspect-video bg-gray-300"></div>
             <p className="text-amber-600">Staff Software</p>
-            <h3 className="text-balance text-5xl">Introducing eTimesheets</h3>
+            <h3 className="text-balance text-3xl">Introducing eTimesheets</h3>
             <p className="max-w-prose text-pretty">
               M.I.T.S. rolls out a new electronic timesheet (eTimesheet) system
               for managerial staff. This system allows employees to easily
@@ -64,94 +89,102 @@ export default async function Page() {
             </h3>
           </li>
         </ul>
-      </section>
+      </PageSection>
 
-      <section className="bg space-y-16 px-16 py-16 2xl:container ">
-        <h2 className="text-3xl">Our Services</h2>
+      {/* Services Section */}
+      <PageSection className="space-y-16">
+        <SectionHeading>Our Services</SectionHeading>
 
-        <dl className="flex gap-16">
-          <div className="min-w-0 flex-1 space-y-16">
-            <div className="space-y-2">
-              <dt className="text-xl">Tech in Education</dt>
-              <dd>Training Services</dd>
-              <dd>Statistical Analysis</dd>
-            </div>
-            <div className="space-y-2">
-              <dt className="text-xl">Infrastructure Services</dt>
-              <dd>IT Security</dd>
-              <dd>Email Service</dd>
-              <dd>MonaSecure VPN</dd>
-              <dd>MonaSpeedtest</dd>
-              <dd>Mona Virtual Desktop Services</dd>
-              <dd>Building Access Control</dd>
-              <dd>VOIP Phones</dd>
-              <dd>Other Infrastructure Services</dd>
-            </div>
-            <div className="space-y-2">
-              <dt className="text-xl">Academic Staff and Student Support</dt>
-              <dd>
-                Programming and Administration of the Virtual Learning
-                Environment
-              </dd>
-              <dd>Student Administration</dd>
-              <dd>Time Tabling</dd>
-              <dd>Computer Purchasing</dd>
-            </div>
+        <dl className="gap-16 space-y-16 sm:columns-2 lg:columns-3">
+          <div className="space-y-2">
+            <dt className="text-lg font-semibold md:text-xl">
+              Tech in Education
+            </dt>
+            <dd>Training Services</dd>
+            <dd>Statistical Analysis</dd>
+          </div>
+          <div className="space-y-2">
+            <dt className="text-lg font-semibold md:text-xl">
+              Infrastructure Services
+            </dt>
+            <dd>IT Security</dd>
+            <dd>Email Service</dd>
+            <dd>MonaSecure VPN</dd>
+            <dd>MonaSpeedtest</dd>
+            <dd>Mona Virtual Desktop Services</dd>
+            <dd>Building Access Control</dd>
+            <dd>VOIP Phones</dd>
+            <dd>Other Infrastructure Services</dd>
+          </div>
+          <div className="space-y-2">
+            <dt className="text-lg font-semibold md:text-xl">
+              Academic Staff and Student Support
+            </dt>
+            <dd>
+              Programming and Administration of the Virtual Learning Environment
+            </dd>
+            <dd>Student Administration</dd>
+            <dd>Time Tabling</dd>
+            <dd>Computer Purchasing</dd>
           </div>
 
-          <div className="min-w-0 flex-1 space-y-16">
-            <div className="space-y-2">
-              <dt className="text-xl">User Support Services</dt>
-              <dd>General Information</dd>
-              <dd>Service Level Agreement</dd>
-              <dd>Service Catalogue</dd>
-              <dd>Customer Service Questionnaire</dd>
-            </div>
-            <div className="space-y-2">
-              <dt className="text-xl">Software Admin</dt>
-              <dd>Campus Software Listing</dd>
-              <dd>Free and Open Source Software</dd>
-              <dd>Licensing and Purchasing Considerations</dd>
-              <dd>Software Acquisition and Management</dd>
-              <dd>Software Request Form</dd>
-            </div>
-            <div className="space-y-2">
-              <dt className="text-xl">Research Computing</dt>
-              <dd>About Sparks</dd>
-              <dd>Slurm Quick Reference Guide</dd>
-              <dd>Software</dd>
-            </div>
+          <div className="space-y-2">
+            <dt className="text-lg font-semibold md:text-xl">
+              User Support Services
+            </dt>
+            <dd>General Information</dd>
+            <dd>Service Level Agreement</dd>
+            <dd>Service Catalogue</dd>
+            <dd>Customer Service Questionnaire</dd>
+          </div>
+          <div className="space-y-2">
+            <dt className="text-lg font-semibold md:text-xl">Software Admin</dt>
+            <dd>Campus Software Listing</dd>
+            <dd>Free and Open Source Software</dd>
+            <dd>Licensing and Purchasing Considerations</dd>
+            <dd>Software Acquisition and Management</dd>
+            <dd>Software Request Form</dd>
+          </div>
+          <div className="space-y-2">
+            <dt className="text-lg font-semibold md:text-xl">
+              Research Computing
+            </dt>
+            <dd>About Sparks</dd>
+            <dd>Slurm Quick Reference Guide</dd>
+            <dd>Software</dd>
           </div>
 
-          <div className="min-w-0 flex-1 space-y-16">
-            <div className="space-y-2">
-              <dt className="text-xl">Administration Support</dt>
-              <dd>Document Management</dd>
-              <dd>Financial Management</dd>
-              <dd>Human Capital Management</dd>
-              <dd>Facilities and Equipment Management</dd>
-              <dd>Computer Purchasing</dd>
-            </div>
-            <div className="space-y-2">
-              <dt className="text-xl">Web Services</dt>
-              <dd>General Information</dd>
-              <dd>E-commerce</dd>
-              <dd>Requesting Service</dd>
-            </div>
-            <div className="space-y-2">
-              <dt className="text-xl">Multimedia Services</dt>
-              <dd>Digital Content Creation</dd>
-              <dd>Multimedia Engineering</dd>
-            </div>
+          <div className="space-y-2">
+            <dt className="text-lg font-semibold md:text-xl">
+              Administration Support
+            </dt>
+            <dd>Document Management</dd>
+            <dd>Financial Management</dd>
+            <dd>Human Capital Management</dd>
+            <dd>Facilities and Equipment Management</dd>
+            <dd>Computer Purchasing</dd>
+          </div>
+          <div className="space-y-2">
+            <dt className="text-lg font-semibold md:text-xl">Web Services</dt>
+            <dd>General Information</dd>
+            <dd>E-commerce</dd>
+            <dd>Requesting Service</dd>
+          </div>
+          <div className="space-y-2">
+            <dt className="text-lg font-semibold md:text-xl">
+              Multimedia Services
+            </dt>
+            <dd>Digital Content Creation</dd>
+            <dd>Multimedia Engineering</dd>
           </div>
         </dl>
-      </section>
+      </PageSection>
 
-      <section className="bg space-y-16 bg-gray-100 px-16 py-16 2xl:container">
-        <h2 className="text-3xl">About M.I.T.S.</h2>
+      <PageSection className="space-y-16">
+        <SectionHeading>About M.I.T.S.</SectionHeading>
 
-        <div className="grid grid-cols-3 grid-rows-2 gap-12">
-          <div className="col-span-2 row-span-2 flex flex-col justify-between gap-12">
+        <div className="grid grid-cols-1 grid-rows-2 gap-12 lg:grid-cols-3">
+          <div className="flex flex-col justify-between gap-12 lg:col-span-2 lg:row-span-2">
             <h3 className="text-pretty text-2xl !leading-[1.1] md:text-3xl lg:text-4xl xl:text-5xl">
               Driving Technological Advancement Across Campus: Enhancing
               Education, Administrative Efficiency, and Community Engagement
@@ -171,58 +204,52 @@ export default async function Page() {
               community for local and international outreach.
             </p>
           </div>
-          <div className="col-span-1 row-span-2 bg-gray-300"></div>
+          <div className="row-start-1 bg-gray-300 lg:col-span-1 lg:row-span-2"></div>
         </div>
 
         <Button>Meet M.I.T.S. Leadership</Button>
-      </section>
+      </PageSection>
 
-      <section className="flex gap-8 px-16 py-16 2xl:container">
-        <h2 className="flex-1 text-3xl">Frequently Asked Questions</h2>
+      <PageSection className="flex flex-col gap-8 md:flex-row">
+        <SectionHeading className="md:flex-1">
+          Frequently Asked Questions
+        </SectionHeading>
         <dl className="flex-1 space-y-8">
           <div className="space-y-2">
-            <dt className="text-xl">General (1)</dt>
-            <dd className="">Who do I call if I have an issue?</dd>
+            <dt className="text-lg font-semibold md:text-xl">General (1)</dt>
+            <dd>Who do I call if I have an issue?</dd>
           </div>
 
           <div className="space-y-2">
-            <dt className="text-xl">Managed Printing Services (14)</dt>
-            <dd className="">What are Managed Print Services (MPS)?</dd>
-            <dd className="">What are The UWIs goals in adopting MPS?</dd>
-            <dd className="">
-              Wasn&apos;t the campus in a previous MPS agreement?
-            </dd>
-            <dd className="">Who is the new provider?</dd>
-            <dd className="">
-              What does the new arrangement mean for my department?
-            </dd>
-            <dd className="">What does the new arrangement mean for me?</dd>
-            <dd className="">
+            <dt className="text-lg font-semibold md:text-xl">
+              Managed Printing Services (14)
+            </dt>
+            <dd>What are Managed Print Services (MPS)?</dd>
+            <dd>What are The UWIs goals in adopting MPS?</dd>
+            <dd>Wasn&apos;t the campus in a previous MPS agreement?</dd>
+            <dd>Who is the new provider?</dd>
+            <dd>What does the new arrangement mean for my department?</dd>
+            <dd>What does the new arrangement mean for me?</dd>
+            <dd>
               But my job function requires me to print high volumes, what do I
               do?
             </dd>
-            <dd className="">Can you explain how the quota system works?</dd>
-            <dd className="">
-              What are the default policies in place for printing?
-            </dd>
-            <dd className="">How do I check my quota?</dd>
-            <dd className="">
-              I have a personal printer, how does this affect me?
-            </dd>
-            <dd className="">
-              My department owns a printer, how does this impact us?
-            </dd>
-            <dd className="">How will toner be delivered?</dd>
-            <dd className="">How do I report a problem with a printer?</dd>
+            <dd>Can you explain how the quota system works?</dd>
+            <dd>What are the default policies in place for printing?</dd>
+            <dd>How do I check my quota?</dd>
+            <dd>I have a personal printer, how does this affect me?</dd>
+            <dd>My department owns a printer, how does this impact us?</dd>
+            <dd>How will toner be delivered?</dd>
+            <dd>How do I report a problem with a printer?</dd>
           </div>
 
           <div className="space-y-2">
-            <dt className="text-xl">PeopleSoft (2)</dt>
-            <dd className="">How can I get training for PeopleSoft?</dd>
-            <dd className="">How do I get access to PeopleSoft?</dd>
+            <dt className="text-lg font-semibold md:text-xl">PeopleSoft (2)</dt>
+            <dd>How can I get training for PeopleSoft?</dd>
+            <dd>How do I get access to PeopleSoft?</dd>
           </div>
         </dl>
-      </section>
+      </PageSection>
     </main>
   );
 }

@@ -9,29 +9,46 @@ const buttonVariants = cva(
     variants: {
       intent: {
         primary:
-          "flex h-10 items-center gap-2 rounded-lg border-b border-t border-b-transparent font-bold shadow outline-offset-4 ring-1 before:absolute before:block before:size-full before:rounded-lg before:opacity-0 active:shadow-sm active:before:opacity-100",
+          "flex h-10 items-center gap-2 rounded-lg font-bold shadow outline-offset-4 ring-1 before:absolute before:inset-0 before:block before:rounded-lg before:border-t after:absolute after:inset-0 after:block after:rounded-lg after:opacity-0 active:shadow-sm active:after:opacity-100",
         tertiary:
           "rounded-lg bg-transparent hover:bg-black/5 active:bg-black/15",
       },
       color: {
-        amber:
-          "border-t-amber-500 bg-amber-600 text-amber-50 shadow-amber-950 ring-amber-700 before:bg-amber-950/5 focus-visible:outline-amber-600 active:border-b-amber-500 active:border-t-transparent",
-        blue: "border-t-blue-600 bg-blue-700 text-blue-50 shadow-blue-950 ring-blue-800 before:bg-blue-950/5 focus-visible:outline-blue-700 active:border-b-blue-600 active:border-t-transparent",
+        amber: "",
+        blue: "",
       },
       size: {
-        lg: "text-lg",
-        md: "",
+        lg: "h-12 text-lg",
+        md: "h-10",
+      },
+      iconOnly: {
+        true: "",
+        false: "px-4",
       },
     },
     compoundVariants: [
-      { intent: "primary", size: "lg", className: "h-12 px-4" },
-      { intent: "primary", size: "md", className: "h-10 px-4" },
-      { intent: "tertiary", size: "md", className: "-m-3 p-3" },
+      {
+        intent: "primary",
+        color: "blue",
+        className:
+          "bg-blue-700 text-blue-50 shadow-blue-950 ring-blue-800 before:border-blue-600 after:bg-blue-950/5 focus-visible:outline-blue-700 active:before:border-b active:before:border-t-0",
+      },
+      {
+        intent: "primary",
+        color: "amber",
+        className:
+          "bg-amber-600 text-amber-50 shadow-amber-950 ring-amber-700 before:border-amber-500 after:border-t-red-400 after:bg-amber-950/5 focus-visible:outline-amber-600 active:border-t-0 active:before:border-b",
+      },
+      { intent: "tertiary", iconOnly: true, size: "md", className: "size-10" },
+      { intent: "tertiary", iconOnly: true, size: "lg", className: "size-12" },
+      { iconOnly: true, size: "md", className: "w-10" },
+      { iconOnly: true, size: "lg", className: "w-12" },
     ],
     defaultVariants: {
       intent: "primary",
       size: "md",
       color: "blue",
+      iconOnly: false,
     },
   },
 );
@@ -42,14 +59,17 @@ type ButtonProps = {
   React.ComponentProps<"button">;
 
 export const Button = forwardRef<React.ElementRef<"button">, ButtonProps>(
-  function Button({ intent, size, color, asChild, ...props }, ref) {
+  function Button({ intent, size, color, iconOnly, asChild, ...props }, ref) {
     const Comp = asChild ? Slot : "button";
 
     return (
       <Comp
         {...props}
         ref={ref}
-        className={cn(buttonVariants({ intent, size, color }), props.className)}
+        className={cn(
+          buttonVariants({ intent, size, color, iconOnly }),
+          props.className,
+        )}
       />
     );
   },

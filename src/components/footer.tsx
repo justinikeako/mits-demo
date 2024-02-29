@@ -4,18 +4,16 @@ import Link from "next/link";
 export function Footer() {
   return (
     <footer className="bg-gray-100">
-      <div className="space-y-16 px-16 pb-8 pt-12 2xl:container">
-        <nav className="flex justify-between">
-          <div>
-            <Image
-              width="138"
-              height="80"
-              src="/mits-logo.svg"
-              alt="Mona Information Technology Services"
-            />
-          </div>
+      <div className="space-y-16  px-6 pb-8 pt-12  2xl:container sm:px-8 md:px-12 lg:px-16">
+        <nav className="flex flex-col justify-between gap-8 md:gap-24 lg:flex-row">
+          <Image
+            width="138"
+            height="80"
+            src="/mits-logo-ext.svg"
+            alt="Mona Information Technology Services"
+          />
 
-          <dl className="flex gap-12">
+          <dl className="flex flex-col flex-wrap gap-12 lg:flex-row">
             <div className="w-64 space-y-4">
               <dt className="font-bold">Hotspot Locations</dt>
               <div className="aspect-video bg-gray-300" />
@@ -57,8 +55,9 @@ export function Footer() {
                 Open 8 - 4 on Mon - Fri
                 <br />
                 <br />
-                Tel: (876) 927-2148
-                <br /> Fax: (876) 927-0997
+                Tel: <Link href="tel:8769272148">(876) 927-2148</Link>
+                <br />
+                Fax: <Link href="tel:8769270997">(876) 927-0997</Link>
               </dd>
             </div>
           </dl>
