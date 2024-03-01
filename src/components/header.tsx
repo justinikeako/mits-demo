@@ -21,7 +21,7 @@ export function Header() {
       </div>
 
       <nav className="sticky top-0 z-50 h-16 bg-white/90 ring-1 ring-black/5 backdrop-blur">
-        <div className="flex h-full items-center justify-between px-6 sm:px-8 md:px-12 lg:px-16">
+        <div className="flex h-full items-center justify-between px-6 2xl:container sm:px-8 md:px-12 lg:px-16">
           <ul className="flex flex-1 gap-8 max-lg:hidden">
             <NavLink href="/">Home</NavLink>
             <NavLink href="/news">News &amp; events</NavLink>
