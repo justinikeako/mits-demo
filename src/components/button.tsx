@@ -4,12 +4,14 @@ import { type VariantProps, cva } from "class-variance-authority";
 import { cn } from "~/lib/utils";
 
 const buttonVariants = cva(
-  "group relative flex w-fit select-none items-center justify-center gap-1 text-center disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none",
+  "group relative flex w-fit select-none items-center justify-center gap-2 text-center disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none",
   {
     variants: {
       intent: {
         primary:
-          "flex h-10 items-center gap-2 rounded-lg font-bold shadow outline-offset-4 ring-1 before:absolute before:inset-0 before:block before:rounded-lg before:border-t after:absolute after:inset-0 after:block after:rounded-lg after:opacity-0 active:shadow-sm active:after:opacity-100",
+          "h-10 rounded-lg bg-gradient-to-b from-blue-600 to-blue-700 font-bold text-white shadow shadow-blue-950 outline-offset-4 ring-1 ring-blue-800/75 before:absolute before:inset-0 before:block before:rounded-lg before:border-t before:border-blue-400 after:absolute after:inset-0 after:block after:rounded-lg after:bg-transparent after:transition-colors hover:after:bg-blue-50/5 focus-visible:outline-blue-700 active:bg-gradient-to-t active:shadow-sm active:before:border-b active:before:border-t-0 active:before:border-blue-500 active:after:bg-blue-950/5 active:after:transition-none",
+        secondary:
+          "h-10 rounded-lg bg-gradient-to-b from-white to-amber-50 font-bold text-amber-950 shadow shadow-amber-950/10 outline-offset-4 ring-1 ring-amber-500/10 before:absolute before:inset-0 before:block before:rounded-lg before:border-b before:border-amber-950/10 after:absolute after:inset-0 after:block after:rounded-lg after:bg-transparent after:transition-colors hover:after:bg-white/15 focus-visible:outline-amber-700 active:bg-gradient-to-t active:shadow-sm active:before:border-b active:before:border-t-0 active:after:bg-amber-300/5 active:after:transition-none",
         tertiary:
           "rounded-lg bg-transparent hover:bg-black/5 active:bg-black/15",
       },
@@ -27,18 +29,6 @@ const buttonVariants = cva(
       },
     },
     compoundVariants: [
-      {
-        intent: "primary",
-        color: "blue",
-        className:
-          "bg-blue-700 text-blue-50 shadow-blue-950 ring-blue-800 before:border-blue-600 after:bg-blue-950/5 focus-visible:outline-blue-700 active:before:border-b active:before:border-t-0",
-      },
-      {
-        intent: "primary",
-        color: "amber",
-        className:
-          "bg-amber-600 text-amber-50 shadow-amber-950 ring-amber-700 before:border-amber-500 after:border-t-red-400 after:bg-amber-950/5 focus-visible:outline-amber-600 active:border-t-0 active:before:border-b",
-      },
       { intent: "tertiary", iconOnly: true, size: "md", className: "size-10" },
       { intent: "tertiary", iconOnly: true, size: "lg", className: "size-12" },
       { iconOnly: true, size: "md", className: "w-10" },

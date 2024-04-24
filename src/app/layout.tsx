@@ -29,7 +29,6 @@ export default function RootLayout({
       <body className={cn(manrope.className, "text-base")}>
         <Header />
         {children}
-        <Footer />
       </body>
     </html>
   );
