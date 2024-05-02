@@ -1,34 +1,47 @@
 import { createOpenAI } from "@ai-sdk/openai";
-import { createAI, streamUI, getMutableAIState } from "ai/rsc";
+import {
+  createAI,
+  streamUI,
+  getMutableAIState,
+  createStreamableValue,
+} from "ai/rsc";
 import { z } from "zod";
 import { nanoid } from "nanoid";
-import type { ChatCompletionAssistantMessageParam } from "ai/prompts";
 import { ChatMessage } from "~/components/chat-message";
 import { env } from "~/env";
-import { CoreMessage } from "ai";
+import type { CoreMessage } from "ai";
 
 const openai = createOpenAI({
   apiKey: env.OPENAI_API_KEY,
 });
 
-// An example of a spinner component. You can also import your own components,
-// or 3rd party component libraries.
 function Spinner() {
   return <div>Loading...</div>;
+}
+
+// Mock the database call to get the user by email.
+async function getUserByEmail(email: string) {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  return {
+    email,
+    uid: nanoid(),
+    alternativeEmail: email,
+  };
 }
 
 async function submitUserMessage(userInput: string): Promise<{
   id: number;
   role: Message["role"];
-  display: React.ReactNode;
+  display: ReturnType<typeof streamUI>;
 }> {
   "use server";
 
-  const aiState = getMutableAIState<typeof AI>();
+  const history = getMutableAIState<typeof AI>();
 
   // Update the AI state with the new user message.
-  aiState.update([
-    ...aiState.get(),
+  history.update([
+    ...history.get(),
     {
       id: nanoid(),
       role: "user",
@@ -36,13 +49,20 @@ async function submitUserMessage(userInput: string): Promise<{
     },
   ]);
 
+  function addMessageToHistory(message: Message) {
+    history.update([...history.get(), message]);
+  }
+
+  let textStream: ReturnType<typeof createStreamableValue<string>> | undefined;
+  let textNode: React.ReactNode | undefined;
+
   // The `streamUI()` creates a generated, streamable UI.
   const ui = streamUI({
     model: openai("gpt-3.5-turbo-0125"),
     initial: <Spinner />,
     prompt: "You are a helpful assistant",
     messages: [
-      ...aiState.get().map((message) => ({
+      ...history.get().map((message) => ({
         role: message.role as "assistant" | "user",
         content: message.content,
         name: message.name,
@@ -52,12 +72,17 @@ async function submitUserMessage(userInput: string): Promise<{
     // Its content is streamed from the LLM, so this function will be called
     // multiple times with `content` being incremental.
     text: ({ content, done, delta }) => {
+      if (!textStream) {
+        textStream = createStreamableValue("");
+        textNode = <ChatMessage role="assistant" content={textStream.value} />;
+      }
+
       // When it's the final content, mark the state as done and ready for the client to access.
       if (done) {
         textStream.done();
 
-        aiState.done([
-          ...aiState.get(),
+        history.done([
+          ...history.get(),
           {
             id: nanoid(),
             role: "assistant",
@@ -68,7 +93,7 @@ async function submitUserMessage(userInput: string): Promise<{
         textStream.update(delta);
       }
 
-      return <p>{content}</p>;
+      return textNode;
     },
     tools: {
       showPasswordReset: {
@@ -86,23 +111,35 @@ async function submitUserMessage(userInput: string): Promise<{
           // Show a spinner on the client while we wait for the response.
           yield <Spinner />;
 
-          // Fetch the flight information from an external API.
-          const flightInfo = await resetPassword(flightNumber);
+          // Check account email and alternative email address against the database.
+          const user = await getUserByEmail(accountEmail);
 
-          // Update the final AI state.
-          aiState.done([
-            ...aiState.get(),
-            {
+          // If the user doesn't exist, return an error message.
+          if (!user) {
+            return <ChatMessage role="assistant" content="User not found" />;
+          }
+
+          // If the user exists, but the email addresses don't match, return an error message.
+          if (
+            user.email !== accountEmail ||
+            user.alternativeEmail !== alternativeEmail
+          ) {
+            addMessageToHistory({
               id: nanoid(),
-              role: "function",
-              name: "get_flight_info",
-              // Content can be any string to provide context to the LLM in the rest of the conversation.
-              content: JSON.stringify(flightInfo),
-            },
-          ]);
+              role: "assistant",
+              content: "Incorrect alternative email address",
+            });
 
-          // Return the flight card to the client.
-          return <FlightCard flightInfo={flightInfo} />;
+            return (
+              <ChatMessage
+                role="assistant"
+                content="Incorrect alternative email address"
+              />
+            );
+          }
+
+          // If the user exists and the email addresses match, return the password reset link.
+          return `https://${env.NEXT_PUBLIC_DRUPAL_BASE_URL}/user/password/reset/${user.uid}`;
         },
       },
     },
@@ -132,12 +169,12 @@ export type UIState = {
 }[];
 
 // AI is a provider you wrap your application with so you can access AI and UI state in your components.
-export const AI = createAI<AIState, UIState>({
+export const AI = createAI({
   actions: {
     submitUserMessage,
   },
   // Each state can be any shape of object, but for chat applications
   // it makes sense to have an array of messages. Or you may prefer something like { id: number, messages: Message[] }
-  initialUIState: [],
-  initialAIState: [],
+  initialUIState: [] as UIState,
+  initialAIState: [] as AIState,
 });
