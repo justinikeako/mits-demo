@@ -26,7 +26,7 @@ export default async function Page() {
             How can we help you today?
           </h1>
 
-          <div className="border-1 mt-10 flex w-full rounded-xl border border-gray-400 py-1 pl-4 pr-1 text-sm shadow-sm outline-2 -outline-offset-1 outline-blue-600 has-[input:focus]:outline sm:w-fit sm:text-base md:text-lg">
+          <div className="border-1 mt-10 flex w-full rounded-xl border border-gray-400 py-1 pl-4 pr-1 text-sm shadow-sm outline-2 -outline-offset-1 outline-blue-800 has-[input:focus]:outline sm:w-fit sm:text-base md:text-lg">
             <input
               type="text"
               name=""

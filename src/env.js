@@ -13,6 +13,13 @@ export const env = createEnv({
         (str) => !str.includes("dev.next-drupal.org"),
         "You forgot to change the default image domain. This is necessary for next/image to work properly.",
       ),
+    OPENAI_API_KEY: z
+      .string()
+      .refine(
+        (str) =>
+          str === "sk-proj-a1b2C3d4E5f6G7H8i9J0K9l8m7N6o5p4q3R2S1T2u3v4w5X6",
+        "You forgot to change the default OpenAI API key",
+      ),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -38,6 +45,7 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
     NODE_ENV: process.env.NODE_ENV,
     NEXT_PUBLIC_DRUPAL_BASE_URL: process.env.NEXT_PUBLIC_DRUPAL_BASE_URL,
     NEXT_IMAGE_DOMAIN: process.env.NEXT_IMAGE_DOMAIN,

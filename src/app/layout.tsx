@@ -1,9 +1,9 @@
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import { Manrope } from "next/font/google";
-import { Footer } from "~/components/footer";
 import { Header } from "~/components/header";
 import { cn } from "~/lib/utils";
+import { AI } from "./action";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -27,8 +27,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(manrope.className, "text-base")}>
-        <Header />
-        {children}
+        <AI>
+          <Header />
+          {children}
+        </AI>
       </body>
     </html>
   );
