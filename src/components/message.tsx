@@ -45,3 +45,21 @@ export function ChatMessage({
     </div>
   );
 }
+export function ToolMessage({ children }: { children: React.ReactNode }) {
+  const senderLabelId = useId();
+
+  return (
+    <div className="w-full" aria-labelledby={senderLabelId}>
+      <div className="flex items-center gap-4">
+        <div className="flex size-8 shrink-0 select-none items-center justify-center rounded-full bg-blue-800 text-[8px] font-semibold text-white">
+          M.I.T.S.
+        </div>
+        <div className="font-semibold" id={senderLabelId}>
+          The Bot <span className="sr-only">said at x:xx xxx</span>
+        </div>
+      </div>
+
+      <div className="pl-12">{children}</div>
+    </div>
+  );
+}

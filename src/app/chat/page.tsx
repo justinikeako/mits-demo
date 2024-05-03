@@ -3,13 +3,14 @@
 import { useActions, useUIState } from "ai/rsc";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 
 import { Button } from "~/components/button";
 import { Icon } from "~/components/icon";
 import type { AI } from "../action";
 import { nanoid } from "nanoid";
-import { ChatMessage } from "~/components/chat-message";
+import { ChatMessage } from "~/components/message";
+import { PasswordResetForm } from "~/components/password-reset-form";
 
 export const dynamic = "force-dynamic";
 
@@ -49,6 +50,7 @@ export default function Page({
       void addMessage(initialInputValue); // Add the initial message to the UI state
       // After submitting the message, hide the query string
       window.history.replaceState(null, "", `/chat`);
+      setInputValue("");
 
       console.log("initial message recieved, history replaced");
 
@@ -77,11 +79,13 @@ export default function Page({
 
       <div className="mx-auto flex h-fit w-full max-w-4xl flex-col-reverse justify-end gap-10 px-4 pb-32 pt-8">
         {messages
-          .map((message) => <div key={message.id}>{message.display}</div>)
+          .map((message) => (
+            <Fragment key={message.id}>{message.display}</Fragment>
+          ))
           .reverse()}
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 bg-white pb-8">
+      <div className="fixed inset-x-0 bottom-0 bg-white px-4 pb-4 md:pb-8">
         <form
           onSubmit={async (e) => {
             e.preventDefault();

@@ -50,7 +50,7 @@ const buttonVariants = cva(
     defaultVariants: {
       intent: "primary",
       size: "md",
-      color: "blue",
+      color: "gray",
       iconOnly: false,
     },
   },

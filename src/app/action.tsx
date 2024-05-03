@@ -7,10 +7,10 @@ import {
 } from "ai/rsc";
 import { z } from "zod";
 import { nanoid } from "nanoid";
-import { ChatMessage } from "~/components/chat-message";
+import { ChatMessage, ToolMessage } from "~/components/message";
 import { env } from "~/env";
 import type { CoreMessage } from "ai";
-import { ResetPasswordButton } from "~/components/reset-password-button";
+import { PasswordResetForm } from "~/components/password-reset-form";
 
 const openai = createOpenAI({
   apiKey: env.OPENAI_API_KEY,
@@ -27,8 +27,7 @@ async function getUserByEmail(email: string) {
   }
 
   return {
-    uid: nanoid(),
-    email,
+    accountEmail: email,
     alternativeEmail: "example@alternative.com",
   };
 }
@@ -64,7 +63,7 @@ async function submitUserMessage(userInput: string): Promise<ClientMessage> {
     system: `\
 You are a helpful assistant for a technical support service at a the University of the West Indies Mona Jamaica. Your job primarily consists of helping users reset their password if they've forgotten it.
 
-If the user requests a password reset, if the user hasn't provided their account email and their alternative email, ask them for it so you can find the user in the database. Only ask for one at a time. Refrain from running the function if only one of the two aforementioned email addresses has been provided. If the user has provided BOTH account email and an alternative email, call \`showPasswordReset\` to show the password reset form.
+If the user requests a password reset, call \`showPasswordReset\` to show the password reset form.
 
 Besides that you can also chat with the user and answer other support questions they might have.`,
     messages: history.get().map((message) => ({
@@ -117,52 +116,15 @@ Besides that you can also chat with the user and answer other support questions 
               ),
           })
           .required(),
-        generate: async function* ({ accountEmail, alternativeEmail }) {
+        generate: async function* (user) {
           // Show a spinner on the client while we wait for the response.
           yield <Spinner />;
 
-          // Check account email and alternative email address against the database.
-          const user = await getUserByEmail(accountEmail);
-
-          console.log(accountEmail, alternativeEmail);
-
-          // If the user doesn't exist, return an error message.
-          if (!user) {
-            addMessageToHistory({
-              id: nanoid(),
-              role: "assistant",
-              content: `Sorry, I couldn't find a user with the email address ${accountEmail}`,
-            });
-
-            return (
-              <ChatMessage
-                role="assistant"
-                content={`Sorry, I couldn't find a user with the email address ${accountEmail}`}
-              />
-            );
-          }
-
-          // If the user exists, but the email addresses don't match, return an error message.
-          if (
-            user.email !== accountEmail ||
-            user.alternativeEmail !== alternativeEmail
-          ) {
-            addMessageToHistory({
-              id: nanoid(),
-              role: "assistant",
-              content:
-                "The alternative email address provided is not associated with this account",
-            });
-
-            return (
-              <ChatMessage
-                role="assistant"
-                content="The alternative email address provided is not associated with this account"
-              />
-            );
-          }
-
-          return <ResetPasswordButton user={user} />;
+          return (
+            <ToolMessage>
+              <PasswordResetForm userInfo={user} />
+            </ToolMessage>
+          );
         },
       },
     },
