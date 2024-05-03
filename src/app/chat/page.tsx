@@ -84,6 +84,8 @@ export default function Page({
           onSubmit={async (e) => {
             e.preventDefault();
 
+            await addMessage(inputValue);
+
             setInputValue("");
           }}
           className="mx-auto flex w-full max-w-4xl rounded-xl border border-gray-400 bg-white py-1 pl-4 pr-1 text-sm shadow-sm outline-2 -outline-offset-1 outline-blue-800 has-[textarea:focus]:outline sm:text-base md:text-lg"
