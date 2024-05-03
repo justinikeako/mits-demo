@@ -11,6 +11,8 @@ import type { AI } from "../action";
 import { nanoid } from "nanoid";
 import { ChatMessage } from "~/components/chat-message";
 
+export const dynamic = "force-dynamic";
+
 export default function Page({
   searchParams,
 }: {
@@ -38,13 +40,13 @@ export default function Page({
     };
   }, [setMessages, submitUserMessage]);
 
-  // const effectRan = useRef(false); // Used to prevent multiple submits
+  const effectRan = useRef(false); // Used to prevent multiple submits
 
   useEffect(() => {
     if (
       searchParams.message &&
-      typeof searchParams.message === "string"
-      // && !effectRan.current
+      typeof searchParams.message === "string" &&
+      !effectRan.current
     ) {
       void addMessage(searchParams.message); // Add the message to the UI state
       // After submitting the message, hide the query string
@@ -52,7 +54,7 @@ export default function Page({
 
       console.log("message recieved, history replaced");
 
-      // effectRan.current = true;
+      effectRan.current = true;
     }
   }, [addMessage, searchParams]);
 
