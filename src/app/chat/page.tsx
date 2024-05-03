@@ -38,20 +38,21 @@ export default function Page({
     };
   }, [setMessages, submitUserMessage]);
 
-  const effectRan = useRef(false); // Used to prevent multiple submits
+  // const effectRan = useRef(false); // Used to prevent multiple submits
 
   useEffect(() => {
     if (
       searchParams.message &&
-      typeof searchParams.message === "string" &&
-      !effectRan.current
+      typeof searchParams.message === "string"
+      // && !effectRan.current
     ) {
       void addMessage(searchParams.message); // Add the message to the UI state
-
       // After submitting the message, hide the query string
       window.history.replaceState(null, "", `/chat`);
 
-      effectRan.current = true;
+      console.log("message recieved, history replaced");
+
+      // effectRan.current = true;
     }
   }, [addMessage, searchParams]);
 
