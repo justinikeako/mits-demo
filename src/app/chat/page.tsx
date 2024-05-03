@@ -18,7 +18,9 @@ export default function Page({
 }: {
   searchParams: Record<string, string | string[] | undefined>;
 }) {
-  const [inputValue, setInputValue] = useState("");
+  const initialInputValue = searchParams.message as string;
+
+  const [inputValue, setInputValue] = useState(initialInputValue ?? "");
   const [messages, setMessages] = useUIState<typeof AI>();
   const { submitUserMessage } = useActions<typeof AI>();
 
@@ -43,20 +45,16 @@ export default function Page({
   const effectRan = useRef(false); // Used to prevent multiple submits
 
   useEffect(() => {
-    if (
-      searchParams.message &&
-      typeof searchParams.message === "string" &&
-      !effectRan.current
-    ) {
-      void addMessage(searchParams.message); // Add the message to the UI state
+    if (initialInputValue && !effectRan.current) {
+      void addMessage(initialInputValue); // Add the initial message to the UI state
       // After submitting the message, hide the query string
       window.history.replaceState(null, "", `/chat`);
 
-      console.log("message recieved, history replaced");
+      console.log("initial message recieved, history replaced");
 
       effectRan.current = true;
     }
-  }, [addMessage, searchParams]);
+  }, [initialInputValue, addMessage, searchParams]);
 
   return (
     <div className="absolute inset-0 z-50 h-svh bg-white">
