@@ -64,7 +64,7 @@ async function submitUserMessage(userInput: string): Promise<ClientMessage> {
     system: `\
 You are a helpful assistant for a technical support service at a the University of the West Indies Mona Jamaica. Your job primarily consists of helping users reset their password if they've forgotten it.
 
-If the user requests a password reset, call \`showPasswordReset\` to show the password reset form.
+If the user requests a password reset, if the user hasn't provided their account email and their alternative email, ask them for it so you can find the user in the database. Only ask for one at a time. Refrain from running the function if only one of the two aforementioned email addresses has been provided. If the user has provided BOTH account email and an alternative email, call \`showPasswordReset\` to show the password reset form.
 
 Besides that you can also chat with the user and answer other support questions they might have.`,
     messages: history.get().map((message) => ({
@@ -102,13 +102,19 @@ Besides that you can also chat with the user and answer other support questions 
     tools: {
       showPasswordReset: {
         description:
-          "Show the UI for resetting a user's password. Use this when the user has forgotten their password and wants to reset it",
+          "Show the UI for resetting a user's password. Use this when the user has forgotten their password and wants to reset it. If the user hasn't provided an email address, ask them for it so you can find the user in the database.",
         parameters: z
           .object({
-            accountEmail: z.string().describe("The account email"),
+            accountEmail: z
+              .string()
+              .describe(
+                "The account email. If not provided, ask the user for it",
+              ),
             alternativeEmail: z
               .string()
-              .describe("The alternative email attatched to the account"),
+              .describe(
+                "The alternative email attatched to the account. If not provided, ask the user for it",
+              ),
           })
           .required(),
         generate: async function* ({ accountEmail, alternativeEmail }) {
@@ -118,9 +124,22 @@ Besides that you can also chat with the user and answer other support questions 
           // Check account email and alternative email address against the database.
           const user = await getUserByEmail(accountEmail);
 
+          console.log(accountEmail, alternativeEmail);
+
           // If the user doesn't exist, return an error message.
           if (!user) {
-            return <ChatMessage role="assistant" content="User not found" />;
+            addMessageToHistory({
+              id: nanoid(),
+              role: "assistant",
+              content: `Sorry, I couldn't find a user with the email address ${accountEmail}`,
+            });
+
+            return (
+              <ChatMessage
+                role="assistant"
+                content={`Sorry, I couldn't find a user with the email address ${accountEmail}`}
+              />
+            );
           }
 
           // If the user exists, but the email addresses don't match, return an error message.
@@ -131,13 +150,14 @@ Besides that you can also chat with the user and answer other support questions 
             addMessageToHistory({
               id: nanoid(),
               role: "assistant",
-              content: "Incorrect alternative email address",
+              content:
+                "The alternative email address provided is not associated with this account",
             });
 
             return (
               <ChatMessage
                 role="assistant"
-                content="Incorrect alternative email address"
+                content="The alternative email address provided is not associated with this account"
               />
             );
           }
