@@ -8,6 +8,8 @@ import { useState } from "react";
 import { Button } from "~/components/button";
 import { Icon } from "~/components/icon";
 import type { AI } from "../action";
+import { nanoid } from "nanoid";
+import { ChatMessage } from "~/components/chat-message";
 
 export default function Page() {
   const [inputValue, setInputValue] = useState("");
@@ -34,7 +36,9 @@ export default function Page() {
       </div>
 
       <div className="mx-auto flex h-fit w-full max-w-4xl flex-col-reverse justify-end gap-10 px-4 pb-32 pt-8">
-        {messages.map(({ id, display }) => display).reverse()}
+        {messages
+          .map((message) => <div key={message.id}>{message.display}</div>)
+          .reverse()}
       </div>
 
       <div className="fixed inset-x-0 bottom-0 bg-white pb-8">
@@ -46,9 +50,9 @@ export default function Page() {
             setMessages((currentMessages) => [
               ...currentMessages,
               {
-                id: Date.now(),
+                id: nanoid(),
                 role: "user",
-                display: <div>{inputValue}</div>,
+                display: <ChatMessage role="user" content={inputValue} />,
               },
             ]);
 
@@ -56,10 +60,10 @@ export default function Page() {
             const responseMessage = await submitUserMessage(inputValue);
             setMessages((currentMessages) => [
               ...currentMessages,
-              { ...responseMessage, role: "assistant" },
+              responseMessage,
             ]);
 
-            // setInputValue("");
+            setInputValue("");
           }}
           className="mx-auto flex w-full max-w-4xl rounded-xl border border-gray-400 bg-white py-1 pl-4 pr-1 text-sm shadow-sm outline-2 -outline-offset-1 outline-blue-800 has-[textarea:focus]:outline sm:text-base md:text-lg"
         >

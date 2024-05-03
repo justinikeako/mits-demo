@@ -10,6 +10,7 @@ import { nanoid } from "nanoid";
 import { ChatMessage } from "~/components/chat-message";
 import { env } from "~/env";
 import type { CoreMessage } from "ai";
+import { ResetPasswordButton } from "~/components/reset-password-button";
 
 const openai = createOpenAI({
   apiKey: env.OPENAI_API_KEY,
@@ -19,22 +20,20 @@ function Spinner() {
   return <div>Loading...</div>;
 }
 
-// Mock the database call to get the user by email.
+// Mock the database call to get the user by example email.
 async function getUserByEmail(email: string) {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  if (email !== "example@example.com") {
+    return null;
+  }
 
   return {
-    email,
     uid: nanoid(),
-    alternativeEmail: email,
+    email,
+    alternativeEmail: "example@alternative.com",
   };
 }
 
-async function submitUserMessage(userInput: string): Promise<{
-  id: number;
-  role: Message["role"];
-  display: ReturnType<typeof streamUI>;
-}> {
+async function submitUserMessage(userInput: string): Promise<ClientMessage> {
   "use server";
 
   const history = getMutableAIState<typeof AI>();
@@ -57,17 +56,22 @@ async function submitUserMessage(userInput: string): Promise<{
   let textNode: React.ReactNode | undefined;
 
   // The `streamUI()` creates a generated, streamable UI.
-  const ui = streamUI({
+  const ui = await streamUI({
     model: openai("gpt-3.5-turbo-0125"),
     initial: <Spinner />,
-    prompt: "You are a helpful assistant",
-    messages: [
-      ...history.get().map((message) => ({
-        role: message.role as "assistant" | "user",
-        content: message.content,
-        name: message.name,
-      })),
-    ],
+    // refine the system prompt below
+
+    system: `\
+You are a helpful assistant for a technical support service at a the University of the West Indies Mona Jamaica. Your job primarily consists of helping users reset their password if they've forgotten it.
+
+If the user requests a password reset, call \`showPasswordReset\` to show the password reset form.
+
+Besides that you can also chat with the user and answer other support questions they might have.`,
+    messages: history.get().map((message) => ({
+      role: message.role as "assistant" | "user",
+      content: message.content,
+      name: message.name,
+    })),
     // `text` is called when an AI returns a text response (as opposed to a tool call).
     // Its content is streamed from the LLM, so this function will be called
     // multiple times with `content` being incremental.
@@ -138,17 +142,15 @@ async function submitUserMessage(userInput: string): Promise<{
             );
           }
 
-          // If the user exists and the email addresses match, return the password reset link.
-          return `https://${env.NEXT_PUBLIC_DRUPAL_BASE_URL}/user/password/reset/${user.uid}`;
+          return <ResetPasswordButton user={user} />;
         },
       },
     },
   });
 
   return {
-    id: Date.now(),
-    role: "assistant",
-    display: ui,
+    id: nanoid(),
+    display: ui.value,
   };
 }
 
@@ -159,14 +161,15 @@ export type Message = {
   name?: string;
 };
 
+export type ClientMessage = {
+  id: string;
+  display: React.ReactNode;
+};
 // The state of the AI. It can be any JSON object.
 export type AIState = Message[];
 
 // The UI state that the client will keep track of, which contains the message IDs and their UI nodes.
-export type UIState = {
-  id: string;
-  display: React.ReactNode;
-}[];
+export type UIState = ClientMessage[];
 
 // AI is a provider you wrap your application with so you can access AI and UI state in your components.
 export const AI = createAI({

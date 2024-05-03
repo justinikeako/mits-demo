@@ -17,7 +17,7 @@ export const env = createEnv({
       .string()
       .refine(
         (str) =>
-          str === "sk-proj-a1b2C3d4E5f6G7H8i9J0K9l8m7N6o5p4q3R2S1T2u3v4w5X6",
+          str !== "sk-proj-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
         "You forgot to change the default OpenAI API key",
       ),
     NODE_ENV: z
@@ -41,14 +41,14 @@ export const env = createEnv({
   },
 
   /**
-   * You can't destruct `process.env` as a regular object in the Next.js edge runtimes (e.g.
-   * middlewares) or client-side so we need to destruct manually.
+   * You can't destructure `process.env` as a regular object in the Next.js edge runtimes (e.g.
+   * middlewares) or client-side so we need to destructure manually.
    */
   runtimeEnv: {
-    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
     NODE_ENV: process.env.NODE_ENV,
     NEXT_PUBLIC_DRUPAL_BASE_URL: process.env.NEXT_PUBLIC_DRUPAL_BASE_URL,
     NEXT_IMAGE_DOMAIN: process.env.NEXT_IMAGE_DOMAIN,
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
