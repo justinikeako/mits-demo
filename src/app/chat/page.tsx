@@ -20,8 +20,6 @@ export default function Page({
   const [messages, setMessages] = useUIState<typeof AI>();
   const { submitUserMessage } = useActions<typeof AI>();
 
-  console.log(searchParams);
-
   const addMessage = useMemo(() => {
     return async (inputValue: string) => {
       // Add user message to UI state
@@ -40,7 +38,7 @@ export default function Page({
     };
   }, [setMessages, submitUserMessage]);
 
-  const effectRan = useRef(false);
+  const effectRan = useRef(false); // Used to prevent multiple submits
 
   useEffect(() => {
     if (
@@ -48,7 +46,10 @@ export default function Page({
       typeof searchParams.message === "string" &&
       !effectRan.current
     ) {
-      void addMessage(searchParams.message);
+      void addMessage(searchParams.message); // Add the message to the UI state
+
+      // After submitting the message, hide the query string
+      window.history.replaceState(null, "", `/chat`);
 
       effectRan.current = true;
     }
