@@ -11,13 +11,14 @@ const buttonVariants = cva(
         primary:
           "h-10 rounded-lg bg-blue-800 bg-gradient-to-b from-white/25 font-bold text-white shadow shadow-blue-950 outline-offset-4 ring-1 ring-blue-900/10 before:absolute before:inset-0 before:block before:rounded-lg before:border-y before:border-b-black/25 before:border-t-white/25 after:absolute after:inset-0 after:block after:rounded-lg after:bg-transparent after:transition-colors hover:after:bg-blue-50/5 focus-visible:outline-blue-700 active:bg-gradient-to-t active:shadow-sm active:before:rotate-180 active:after:bg-blue-950/5 active:after:transition-none",
         secondary:
-          "h-10 rounded-lg bg-amber-50 bg-gradient-to-b from-white/75 font-bold text-amber-950 shadow shadow-amber-950/10 outline-offset-4 ring-1 ring-amber-500/10 before:absolute before:inset-0 before:block before:rounded-lg before:border-b before:border-amber-950/10 after:absolute after:inset-0 after:block after:rounded-lg after:bg-transparent after:transition-colors hover:after:bg-white/15 focus-visible:outline-amber-700 active:bg-gradient-to-t active:shadow-sm active:before:rotate-180 active:after:bg-amber-300/5 active:after:transition-none",
+          "h-10 rounded-lg  bg-gradient-to-b from-white/75 font-bold  outline-offset-4 ring-1 before:absolute before:inset-0 before:block before:rounded-lg before:border-b  after:absolute after:inset-0 after:block after:rounded-lg after:bg-transparent after:transition-colors hover:after:bg-white/15  active:bg-gradient-to-t active:shadow-sm active:before:rotate-180  active:after:transition-none",
         tertiary:
           "rounded-lg bg-transparent hover:bg-black/5 active:bg-black/15",
       },
       color: {
-        amber: "",
         blue: "",
+        amber: "",
+        gray: "",
       },
       size: {
         lg: "h-12 text-lg",
@@ -29,6 +30,18 @@ const buttonVariants = cva(
       },
     },
     compoundVariants: [
+      {
+        intent: "secondary",
+        color: "amber",
+        className:
+          "bg-amber-50 text-amber-950 shadow shadow-amber-950/10 ring-amber-500/10 before:border-amber-950/10 focus-visible:outline-amber-700 active:after:bg-amber-300/5",
+      },
+      {
+        intent: "secondary",
+        color: "gray",
+        className:
+          "bg-gray-50 text-gray-950 shadow shadow-gray-950/10 ring-gray-500/10 before:border-gray-950/10 focus-visible:outline-gray-700 active:after:bg-gray-300/5",
+      },
       { intent: "tertiary", iconOnly: true, size: "md", className: "size-10" },
       { intent: "tertiary", iconOnly: true, size: "lg", className: "size-12" },
       { iconOnly: true, size: "md", className: "w-10" },

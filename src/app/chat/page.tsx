@@ -3,7 +3,7 @@
 import { useActions, useUIState } from "ai/rsc";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { Button } from "~/components/button";
 import { Icon } from "~/components/icon";
@@ -11,10 +11,48 @@ import type { AI } from "../action";
 import { nanoid } from "nanoid";
 import { ChatMessage } from "~/components/chat-message";
 
-export default function Page() {
+export default function Page({
+  searchParams,
+}: {
+  searchParams: Record<string, string | string[] | undefined>;
+}) {
   const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useUIState<typeof AI>();
   const { submitUserMessage } = useActions<typeof AI>();
+
+  console.log(searchParams);
+
+  const addMessage = useMemo(() => {
+    return async (inputValue: string) => {
+      // Add user message to UI state
+      setMessages((currentMessages) => [
+        ...currentMessages,
+        {
+          id: nanoid(),
+          role: "user",
+          display: <ChatMessage role="user" content={inputValue} />,
+        },
+      ]);
+
+      // Submit and get response message
+      const responseMessage = await submitUserMessage(inputValue);
+      setMessages((currentMessages) => [...currentMessages, responseMessage]);
+    };
+  }, [setMessages, submitUserMessage]);
+
+  const effectRan = useRef(false);
+
+  useEffect(() => {
+    if (
+      searchParams.message &&
+      typeof searchParams.message === "string" &&
+      !effectRan.current
+    ) {
+      void addMessage(searchParams.message);
+
+      effectRan.current = true;
+    }
+  }, [addMessage, searchParams]);
 
   return (
     <div className="absolute inset-0 z-50 h-svh bg-white">
@@ -45,23 +83,6 @@ export default function Page() {
         <form
           onSubmit={async (e) => {
             e.preventDefault();
-
-            // Add user message to UI state
-            setMessages((currentMessages) => [
-              ...currentMessages,
-              {
-                id: nanoid(),
-                role: "user",
-                display: <ChatMessage role="user" content={inputValue} />,
-              },
-            ]);
-
-            // Submit and get response message
-            const responseMessage = await submitUserMessage(inputValue);
-            setMessages((currentMessages) => [
-              ...currentMessages,
-              responseMessage,
-            ]);
 
             setInputValue("");
           }}

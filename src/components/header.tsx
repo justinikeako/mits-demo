@@ -40,7 +40,11 @@ export function Header() {
             <NavLink href="/contact">Contact</NavLink>
           </ul>
 
-          <Button intent="secondary" className="z-10 max-lg:hidden">
+          <Button
+            intent="secondary"
+            color="amber"
+            className="z-10 max-lg:hidden"
+          >
             <span className="size-2 rounded-full bg-amber-600 before:block before:size-full before:animate-ping before:rounded-full before:bg-amber-600/75" />
             <span className="leading-cap">Live Support</span>
             <Icon name="support_agent" />

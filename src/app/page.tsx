@@ -8,6 +8,7 @@ import mitsSign from "../../public/mits-sign.jpg";
 import Link from "next/link";
 import { Suspense } from "react";
 import { Footer } from "~/components/footer";
+import ChatInput from "~/components/chat-input";
 
 export default async function Page() {
   return (
@@ -26,26 +27,7 @@ export default async function Page() {
             How can we help you today?
           </h1>
 
-          <div className="border-1 mt-10 flex w-full rounded-xl border border-gray-400 py-1 pl-4 pr-1 text-sm shadow-sm outline-2 -outline-offset-1 outline-blue-800 has-[input:focus]:outline sm:w-fit sm:text-base md:text-lg">
-            <input
-              type="text"
-              name=""
-              id=""
-              placeholder="E.g. I need a projector for my next class"
-              className="flex-1 placeholder-gray-500 outline-none sm:w-96"
-            />
-            <Button className="md:hidden" iconOnly asChild>
-              <Link href="/chat">
-                <Icon name="arrow_right" />
-              </Link>
-            </Button>
-            <Button size="lg" className="max-md:hidden" asChild>
-              <Link href="/chat">
-                <span>Get your Answer</span>
-                <Icon name="arrow_right" />
-              </Link>
-            </Button>
-          </div>
+          <ChatInput />
 
           <div className="mt-4 flex gap-4 rounded-lg border border-amber-100 bg-amber-50 px-3 py-2 text-sm text-amber-950 md:py-1">
             <div className="-mr-2 flex h-5 items-center self-start">
@@ -103,11 +85,19 @@ export default async function Page() {
             </div>
           </div>
 
-          <Button asChild>
-            <Link href="https://www.mona.uwi.edu/mits/news/2018/09/mits-enabler-positive-transformation">
-              Meet M.I.T.S. Leadership
-            </Link>
-          </Button>
+          <div className="flex gap-4">
+            <Button asChild intent="primary">
+              <Link href="https://notprimitive.com/hiremelol">
+                Join Our Team
+                <Icon name="arrow_right" />
+              </Link>
+            </Button>
+            <Button asChild intent="secondary" color="gray">
+              <Link href="https://www.mona.uwi.edu/mits/news/2018/09/mits-enabler-positive-transformation">
+                Meet M.I.T.S. Leadership
+              </Link>
+            </Button>
+          </div>
         </PageSection>
 
         {/* FAQ Section */}
