@@ -12,7 +12,7 @@ export function ServicesSection() {
   );
 
   return (
-    <PageSection className="space-y-8 sm:space-y-16">
+    <PageSection className="space-y-8 sm:space-y-16" id="services">
       <SectionHeading>Our Services</SectionHeading>
 
       <div className="flex flex-col gap-8 sm:flex-row">
@@ -20,7 +20,7 @@ export function ServicesSection() {
           {serviceCategories.map((category) => (
             <li
               key={category.name}
-              className="relative flex h-8 items-center gap-2 rounded-md border border-gray-300 px-2 text-sm text-gray-700 hover:bg-gray-50 has-[input:checked]:border-blue-800 has-[input:checked]:bg-blue-50 has-[input:checked]:font-bold has-[input:checked]:text-blue-800"
+              className="relative flex h-8 items-center gap-2 rounded-md border border-gray-300 bg-gradient-to-t px-2 text-sm text-gray-700 hover:bg-gray-50 has-[input:checked]:border-blue-600 has-[input:checked]:from-blue-50 has-[input:checked]:font-bold has-[input:checked]:text-blue-800"
             >
               <label htmlFor={category.id} className="absolute inset-0" />
               <input
@@ -41,7 +41,7 @@ export function ServicesSection() {
           {currentCategory?.services.map((service, index) => (
             <li
               key={service.name}
-              className="relative flex min-h-72 flex-col justify-between gap-8 rounded-md border border-gray-200 bg-gradient-to-t from-gray-50 p-4 text-sm text-gray-700 "
+              className="relative flex min-h-72 flex-col justify-between gap-8 rounded-md border border-gray-200 bg-gradient-to-t from-gray-50 p-4 text-sm text-gray-700 hover:from-blue-50 hover:text-blue-950"
             >
               <span className="top-4 self-end text-5xl">0{index + 1}</span>
 
@@ -61,17 +61,6 @@ export function ServicesSection() {
         </ul>
       </div>
     </PageSection>
-  );
-}
-
-function ServiceCategory({ category }: { category: ServiceCategories }) {
-  return (
-    <div className="space-y-2">
-      <dt className="text-lg font-semibold md:text-xl">{category.name}</dt>
-      {category.services.map((service) => (
-        <dd key={service.name}>{service.name}</dd>
-      ))}
-    </div>
   );
 }
 
