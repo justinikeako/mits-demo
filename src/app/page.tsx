@@ -75,7 +75,7 @@ export default async function Page() {
         <ServicesSection />
 
         {/* About Section */}
-        <PageSection className="space-y-16">
+        <PageSection className="space-y-16" id="about">
           <SectionHeading>About M.I.T.S.</SectionHeading>
 
           <div className="grid-auto-rows grid grid-cols-1 gap-12 lg:grid-cols-3">
@@ -125,7 +125,7 @@ export default async function Page() {
         </PageSection>
 
         {/* FAQ Section */}
-        <PageSection className="flex flex-col gap-8 md:flex-row">
+        <PageSection className="flex flex-col gap-8 md:flex-row" id="faq">
           <SectionHeading className="md:flex-1">
             Frequently Asked Questions
           </SectionHeading>
