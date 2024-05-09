@@ -10,7 +10,6 @@ import { Icon } from "~/components/icon";
 import type { AI } from "../action";
 import { nanoid } from "nanoid";
 import { ChatMessage } from "~/components/message";
-import { PasswordResetForm } from "~/components/password-reset-form";
 
 export const dynamic = "force-dynamic";
 
