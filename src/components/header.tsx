@@ -22,7 +22,7 @@ export function Header() {
 
       <nav className="sticky top-0 z-40 h-16 bg-white/90 ring-1 ring-black/5 backdrop-blur">
         <div className="flex h-full items-center justify-between px-6 2xl:container sm:px-8 md:px-12 lg:px-16">
-          <ul className="flex flex-1 gap-8 max-lg:hidden">
+          <ul className="flex flex-1 gap-8">
             <Link href="/">
               <Image
                 width="138"
@@ -44,10 +44,13 @@ export function Header() {
             intent="secondary"
             color="amber"
             className="z-10 max-lg:hidden"
+            asChild
           >
-            <span className="size-2 rounded-full bg-amber-600 before:block before:size-full before:animate-ping before:rounded-full before:bg-amber-600/75" />
-            <span className="leading-cap">Live Support</span>
-            <Icon name="support_agent" />
+            <Link href="/chat">
+              <span className="size-2 rounded-full bg-amber-600 before:block before:size-full before:animate-ping before:rounded-full before:bg-amber-600/75" />
+              <span className="leading-cap">Live Support</span>
+              <Icon name="support_agent" />
+            </Link>
           </Button>
 
           <Button intent="tertiary" iconOnly className="z-10 lg:hidden">
@@ -61,7 +64,10 @@ export function Header() {
 function NavLink(props: React.PropsWithChildren<LinkProps>) {
   return (
     <li className="contents">
-      <Link {...props} className="-mx-2 -my-1 text-nowrap px-2 py-1" />
+      <Link
+        {...props}
+        className="-mx-2 -my-1 text-nowrap px-2 py-1 max-lg:hidden"
+      />
     </li>
   );
 }
