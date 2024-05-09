@@ -11,6 +11,8 @@ import { ChatMessage, ToolMessage } from "~/components/message";
 import { env } from "~/env";
 import type { CoreMessage } from "ai";
 import { PasswordResetForm } from "~/components/password-reset-form";
+import { EmailQuotaForm } from "~/components/email-quota";
+import { RequestInPersonSupportForm } from "~/components/support-request-form";
 
 const openai = createOpenAI({
   apiKey: env.OPENAI_API_KEY,
@@ -20,16 +22,11 @@ function Spinner() {
   return <div>Loading...</div>;
 }
 
-// Mock the database call to get the user by example email.
-async function getUserByEmail(email: string) {
-  if (email !== "example@example.com") {
-    return null;
-  }
+// A mock function for changing the user's email address.
+async function changeEmail(email: string) {
+  "use server";
 
-  return {
-    accountEmail: email,
-    alternativeEmail: "example@alternative.com",
-  };
+  return email;
 }
 
 async function submitUserMessage(userInput: string): Promise<ClientMessage> {
@@ -64,6 +61,8 @@ async function submitUserMessage(userInput: string): Promise<ClientMessage> {
 You are a helpful assistant for a technical support service at a the University of the West Indies Mona Jamaica. Your job primarily consists of helping users reset their password if they've forgotten it.
 
 If the user requests a password reset, call \`showPasswordReset\` to show the password reset form.
+
+If the user requests to increase their email quota, call \`showEmailQuota\` to show the email quota form.
 
 Besides that you can also chat with the user and answer other support questions they might have.`,
     messages: history.get().map((message) => ({
@@ -127,6 +126,55 @@ Besides that you can also chat with the user and answer other support questions 
           );
         },
       },
+      showEmailQuota: {
+        description:
+          "Show the UI for increasing the user's email quota. Use this when the user has reached their email quota and wants to increase it.",
+        parameters: z
+          .object({
+            accountEmail: z
+              .string()
+              .describe(
+                "The account email. If not provided, ask the user for it",
+              ),
+          })
+          .required(),
+        generate: async function* (user) {
+          // Show a spinner on the client while we wait for the response.
+          yield <Spinner />;
+
+          return (
+            <ToolMessage>
+              <EmailQuotaForm defaultEmail={user.accountEmail} />
+            </ToolMessage>
+          );
+        },
+      },
+      showSupportRequest: {
+        description:
+          "Show the UI for requesting in-person support. Use this when the user has technical issues that can't be resolved through the chatbot.",
+        parameters: z
+          .object({
+            accountEmail: z
+              .string()
+              .describe(
+                "The account email. If not provided, ask the user for it",
+              ),
+            message: z
+              .string()
+              .describe("The message. If not provided, ask the user for it"),
+          })
+          .required(),
+        generate: async function* () {
+          // Show a spinner on the client while we wait for the response.
+          yield <Spinner />;
+
+          return (
+            <ToolMessage>
+              <RequestInPersonSupportForm />
+            </ToolMessage>
+          );
+        },
+      },
     },
   });
 
@@ -157,6 +205,7 @@ export type UIState = ClientMessage[];
 export const AI = createAI({
   actions: {
     submitUserMessage,
+    changeEmail,
   },
   // Each state can be any shape of object, but for chat applications
   // it makes sense to have an array of messages. Or you may prefer something like { id: number, messages: Message[] }

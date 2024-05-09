@@ -38,7 +38,7 @@ export function PasswordResetForm({ userInfo }: { userInfo: UserInfo }) {
       </div>
       <div className="flex flex-wrap gap-8">
         {/* current email address */}
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-2">
           <label htmlFor="email">Account email address</label>
           <input
             defaultValue={userInfo.accountEmail}
@@ -50,7 +50,7 @@ export function PasswordResetForm({ userInfo }: { userInfo: UserInfo }) {
           />
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-2">
           <label htmlFor="alternativeEmail">Alternative email address</label>
           <input
             type="email"
