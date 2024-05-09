@@ -32,7 +32,7 @@ export function Header() {
                 className="h-5 w-auto"
               />
             </Link>
-            <NavLink href="/news">News &amp; events</NavLink>
+            <NavLink href="#news">News &amp; events</NavLink>
             <NavLink href="#services">Our Services</NavLink>
             <NavLink href="#about">About M.I.T.S</NavLink>
             <NavLink href="/policies">Policies</NavLink>

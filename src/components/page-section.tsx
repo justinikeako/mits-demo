@@ -6,7 +6,7 @@ export function PageSection(props: React.ComponentProps<"div">) {
       <div
         {...props}
         className={cn(
-          "px-6 py-16 2xl:container sm:px-8 md:px-12 lg:px-16",
+          "scroll-m-16 px-6 py-16 2xl:container sm:px-8 md:px-12 lg:px-16",
           props.className,
         )}
       />
