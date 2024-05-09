@@ -24,12 +24,12 @@ export async function NewsSection() {
   );
 
   return (
-    <PageSection className="space-y-16">
+    <PageSection className="space-y-16" id="news">
       <div className="flex items-center justify-between">
         <SectionHeading>Featured News & Events</SectionHeading>
         <Link
           href="/news"
-          className="text-sm font-bold text-blue-600 md:text-base"
+          className="text-sm font-bold text-blue-800 md:text-base"
         >
           See All
         </Link>
