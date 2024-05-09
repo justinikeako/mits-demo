@@ -57,8 +57,8 @@ export default async function Page() {
           <div className="grid-auto-rows grid grid-cols-1 gap-12 lg:grid-cols-3">
             <div className="flex flex-col justify-between gap-12 lg:col-span-2 lg:row-span-2">
               <h3 className="text-pretty text-2xl !leading-[1.1] md:text-3xl lg:text-4xl xl:text-5xl">
-                Driving Technological Advancement Across Campus: Enhancing
-                Education, Administrative Efficiency, and Community Engagement
+                Driving innovation & efficiency in education & administration
+                across campus and beyond.
               </h3>
               <p className="leading-relaxed">
                 M.I.T.S. spearheads technological advancement at the Campus,
