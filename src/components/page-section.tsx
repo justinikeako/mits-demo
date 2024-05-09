@@ -2,7 +2,7 @@ import { cn } from "~/lib/utils";
 
 export function PageSection(props: React.ComponentProps<"div">) {
   return (
-    <section className="odd:bg-gray-100">
+    <section className="odd:bg-gray-50">
       <div
         {...props}
         className={cn(
